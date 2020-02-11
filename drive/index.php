@@ -1,5 +1,7 @@
 <?php
 
+define('Gugol', TRUE);
+include '../engine/utils/SizeFormater.php';
 include '../config.php';
 
 try
@@ -113,12 +115,12 @@ if($username !== 'Guest'){
        foreach ($rows as $rs)
 		{
     echo '<tr>';
-    echo '<td>'.$rs['Date'].'</td>';
+    echo '<td>'.date('Y-m-d H:i:s', $rs['Date']).'</td>';
     echo '<td>'.$rs['Name'].'</td>';
-    echo '<td>'.$rs['Size'].'</td>';
+    echo '<td>'.formatSize($rs['Size']).'</td>';
 	echo '<td><a href="/drive/dl.php?id='.$rs['ID'].'&link='.$rs['Link'].'">Download</a></td>';
-	echo '<td>'.$rs['Link'].'</td>';
-    echo '</tr>';
+	echo '<td><a href="/drive/remove.php?id='.$rs['ID'].'&link='.$rs['Link'].'">Remove</a></td>';
+	echo '</tr>';
 		}
 	?>
   </tbody>
