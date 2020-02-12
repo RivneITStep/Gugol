@@ -6,10 +6,10 @@ try
 {
 	$username = 'Guest';
 	$userID = 0;
+    if(isset($_COOKIE['session'])){
 	$host=$config['DB_HOST'];
     $dbname=$config['DB_DATABASE'];
 	$conn= new PDO("mysql:host=$host;dbname=$dbname",$config['DB_USERNAME'],$config['DB_PASSWORD']);
-    if(!empty($_COOKIE['session'])){
 	$stmt = $conn->prepare("SELECT ID, Username FROM users WHERE Session = ?");
 	$stmt->bindValue(1, $_COOKIE['session']);
 	$stmt->execute();
@@ -27,7 +27,7 @@ catch(PDOException $e)
 	$stmt->bindValue(2, $_GET['link']);
 	$stmt->execute();
     $rsFile = $stmt->fetch();
-	if($rsFile['Shared'] == 1 || $rsFile['OwnerID'] == $userID)
+	if($rsFile['OwnerID'] == $userID)
 	{
 		$file = basename($rsFile['Path']);
 		$file = '../../drive/'.$file;
@@ -35,12 +35,18 @@ catch(PDOException $e)
 if(!file_exists($file)){
     die('file not found');
 } else {
-    header("Cache-Control: public");
-    header("Content-Description: File Transfer");
-    header("Content-Disposition: attachment; filename=".$rsFile['Name']);
-    header("Content-Type: application/zip");
-    header("Content-Transfer-Encoding: binary");
-    readfile($file);
+	$stmt = $conn->prepare("UPDATE drive SET Shared = ? WHERE ID = ? AND Link = ?");
+	
+	if($rsFile['Shared'])
+		$state = 0;
+	else
+		$state = 1;
+	
+	$stmt->bindValue(1, $state);
+	$stmt->bindValue(2, $_GET['id']);
+	$stmt->bindValue(3, $_GET['link']);
+	$stmt->execute();
+	header("Location: index.php");
 }
 	}else{
 		http_response_code(404);

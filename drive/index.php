@@ -62,10 +62,12 @@ if($username !== 'Guest'){
     </style>
     <!-- Custom styles for this template -->
     <link href="/dist/css/pricing.css" rel="stylesheet">
+	<link href="/dist/css/alertbox.css" rel="stylesheet">
   </head>
   <body>
     <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
   <h5 class="my-0 mr-md-auto font-weight-normal">Gugol</h5>
+<div class="alert-success" role="alert" id="alert"></div>
 <html>
     <head> 
         <script>
@@ -79,6 +81,17 @@ if($username !== 'Guest'){
                     document.getElementById('formid').submit();
                 }
             }
+			function myFunction() {
+				var copyText = document.getElementById("myInput");
+
+				copyText.select();
+				copyText.setSelectionRange(0, 99999);
+				
+				document.execCommand("copy");
+				
+				document.getElementById("alert").innerHTML = "<strong>Success!</strong> Copied the link.";
+				alert("Copied the link!");
+				}
         </script> 
     </head>
     <body onload="setup()">
@@ -104,6 +117,8 @@ if($username !== 'Guest'){
       <th scope="col">Size</th>
 	  <th scope="col">Download</th>
 	  <th scope="col">Remove</th>
+	  <th scope="col">Share</th>
+	  <th scope="col">Link</th>
     </tr>
   </thead>
   <tbody>
@@ -116,10 +131,16 @@ if($username !== 'Guest'){
 		{
     echo '<tr>';
     echo '<td>'.date('Y-m-d H:i:s', $rs['Date']).'</td>';
-    echo '<td>'.$rs['Name'].'</td>';
+    echo '<td>'.htmlspecialchars($rs['Name']).'</td>';
     echo '<td>'.formatSize($rs['Size']).'</td>';
 	echo '<td><a href="/drive/dl.php?id='.$rs['ID'].'&link='.$rs['Link'].'">Download</a></td>';
 	echo '<td><a href="/drive/remove.php?id='.$rs['ID'].'&link='.$rs['Link'].'">Remove</a></td>';
+	if(!$rs['Shared'])
+		echo '<td><a href="/drive/share.php?id='.$rs['ID'].'&link='.$rs['Link'].'">Share</a></td>';
+	else{
+		echo '<td><a href="/drive/share.php?id='.$rs['ID'].'&link='.$rs['Link'].'">Unshare</a></td>';
+		echo '<td><input class="form-control form-control-sm" type="text" value="http://gugol.com/drive/dl.php?id='.$rs['ID'].'&link='.$rs['Link'].'" id="myInput"><button onclick="myFunction()" class="btn btn-info">Copy link</button></td>';
+	}
 	echo '</tr>';
 		}
 	?>
@@ -131,4 +152,3 @@ if($username !== 'Guest'){
 	   }else{
 		    echo 'You must be logged!';
 	   }
-
