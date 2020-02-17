@@ -5,10 +5,10 @@ include 'config.php';
 try
 {
 	$username = 'Guest';
-    if(isset($_COOKIE['session'])){
 	$host=$config['DB_HOST'];
     $dbname=$config['DB_DATABASE'];
 	$conn= new PDO("mysql:host=$host;dbname=$dbname",$config['DB_USERNAME'],$config['DB_PASSWORD']);
+	if(isset($_COOKIE['session'])){
 	$stmt = $conn->prepare("SELECT Username FROM users WHERE Session = ?");
 	$stmt->bindValue(1, $_COOKIE['session']);
 	$stmt->execute();

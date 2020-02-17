@@ -73,7 +73,7 @@ catch(PDOException $e)
       <label for="inputPassword" class="sr-only">Password</label>
       <input type="password" id="inputPassword" class="form-control"  name="password" placeholder="Password" required>
       <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-      <p class="mt-5 mb-3 text-muted">&copy; 2019</p>
+      <p class="mt-5 mb-3 text-muted">&copy; 2020</p>
     </form>
   </body>
 </html>
