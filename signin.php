@@ -51,7 +51,6 @@ catch(PDOException $e)
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
 
     <title>Gugol | Signin</title>
 
@@ -66,7 +65,6 @@ catch(PDOException $e)
 
   <body class="text-center">
     <form class="form-signin" action="/signin.php" method="post">
-      <img class="mb-4" src="../../dist/img/logo.svg" alt="" width="72" height="72">
       <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
       <label for="inputEmail" class="sr-only">Email address</label>
       <input type="email" id="inputEmail" class="form-control" name="email" placeholder="Email address" required autofocus>

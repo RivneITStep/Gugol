@@ -36,7 +36,7 @@ if($username !== 'Guest'){
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="generator" content="Jekyll v3.8.5">
-    <title>Gugol</title>
+    <title>UltraCloud</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/pricing/">
 
@@ -66,7 +66,7 @@ if($username !== 'Guest'){
   </head>
   <body>
     <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-  <h5 class="my-0 mr-md-auto font-weight-normal">Gugol</h5>
+  <h5 class="my-0 mr-md-auto font-weight-normal">UltraCloud</h5>
 <div class="alert-success" role="alert" id="alert"></div>
 <html>
     <head> 

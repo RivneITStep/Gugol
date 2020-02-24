@@ -1,90 +1,66 @@
-<?php
-
-define('Gugol', TRUE);
-
-include 'config.php';
-include 'engine/utils/RandomString.php';
-
-if(isset($_POST['email']) && filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) && isset($_POST['password']) && isset($_POST['password_confirm']) && isset($_POST['username']) && $_POST['password'] === $_POST['password_confirm'])
+<head>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+<style>
+.note
 {
-try
+    text-align: center;
+    height: 80px;
+    background: -webkit-linear-gradient(left, #0072ff, #8811c5);
+    color: #fff;
+    font-weight: bold;
+    line-height: 80px;
+}
+.form-content
 {
-	$host=$config['DB_HOST'];
-    $dbname=$config['DB_DATABASE'];
-	$conn= new PDO("mysql:host=$host;dbname=$dbname",$config['DB_USERNAME'],$config['DB_PASSWORD']);
-	$stmt = $conn->prepare("SELECT * FROM users WHERE Username = ? OR Email = ?");
-	$stmt->bindValue(1, $_POST['username']);
-	$stmt->bindValue(2, $_POST['email']);
-	$stmt->execute();
-    $rows = $stmt->fetchAll();
-	if(sizeof($rows) == 0){
-			$randomString = generateRandomString();
-			$stmt = $conn->prepare("INSERT INTO users (ID, Username, Password_Hash, Email, Session) VALUES (NULL, ?, ?, ?, ?)");
-			$stmt->bindValue(1, $_POST['username']);
-			$stmt->bindValue(2, password_hash($_POST['password'], PASSWORD_DEFAULT));
-			$stmt->bindValue(3, $_POST['email']);
-			$stmt->bindValue(4, $randomString);
-			$stmt->execute();
-			setcookie("session", $randomString, time()+2*24*60*60);
-			header("Location: index.php");
-			die();
-	}
+    padding: 5%;
+    border: 1px solid #ced4da;
+    margin-bottom: 2%;
 }
-catch(PDOException $e)
+.form-control{
+    border-radius:1.5rem;
+}
+.btnSubmit
 {
-    echo "Error:".$e->getMessage();
+    border:none;
+    border-radius:1.5rem;
+    padding: 1%;
+    width: 20%;
+    cursor: pointer;
+    background: #0062cc;
+    color: #fff;
 }
-}
-?>
-<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-
-<form class="form-horizontal" action='' method="POST">
-  <fieldset>
-    <div id="legend">
-      <legend class="">Register</legend>
-    </div>
-    <div class="control-group">
-      <!-- Username -->
-      <label class="control-label"  for="username">Username</label>
-      <div class="controls">
-        <input type="text" id="username" name="username" placeholder="" class="input-xlarge">
-        <p class="help-block">Username can contain any letters or numbers, without spaces</p>
-      </div>
-    </div>
- 
-    <div class="control-group">
-      <!-- E-mail -->
-      <label class="control-label" for="email">E-mail</label>
-      <div class="controls">
-        <input type="text" id="email" name="email" placeholder="" class="input-xlarge">
-        <p class="help-block">Please provide your E-mail</p>
-      </div>
-    </div>
- 
-    <div class="control-group">
-      <!-- Password-->
-      <label class="control-label" for="password">Password</label>
-      <div class="controls">
-        <input type="password" id="password" name="password" placeholder="" class="input-xlarge">
-        <p class="help-block">Password should be at least 4 characters</p>
-      </div>
-    </div>
- 
-    <div class="control-group">
-      <!-- Password -->
-      <label class="control-label"  for="password_confirm">Password (Confirm)</label>
-      <div class="controls">
-        <input type="password" id="password_confirm" name="password_confirm" placeholder="" class="input-xlarge">
-        <p class="help-block">Please confirm password</p>
-      </div>
-    </div>
- 
-    <div class="control-group">
-      <div class="controls">
-        <button class="btn btn-success">Register</button>
-      </div>
-    </div>
-  </fieldset>
-</form>
+</style>
+<head>
+<div class="container register-form">
+            <div class="form">
+                <div class="note">
+                    <p>UltraCloud</p>
+                </div>
+				<form action="signup_script.php" method="post">
+                <div class="form-content">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="username" placeholder="Your Name" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="email" placeholder="Email" value=""/>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="password" placeholder="Your Password" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="password_confirm" placeholder="Confirm Password" value=""/>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btnSubmit">Submit</button>
+                </div>
+				</form>
+            </div>
+        </div>
