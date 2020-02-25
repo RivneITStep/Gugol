@@ -14,7 +14,7 @@ body {
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12 text-center">
-                <span class="display-1 d-block">INFO</span>
+                <span class="display-1 d-block">Error</span>
                 <div class="mb-4 lead">
 <?php
 
@@ -28,7 +28,7 @@ if(!empty($_POST['email']) && filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)
 	if(strlen($_POST['password']) > 6 && strlen($_POST['password']) < 37 && strlen($_POST['password_confirm']) > 6 && strlen($_POST['password_confirm']) < 37){
 		if($_POST['password'] === $_POST['password_confirm']){
 				if(strlen($_POST['username']) > 3 && strlen($_POST['username']) < 20){
-					if(preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $_POST['username'])){
+					if(!preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $_POST['username'])){
 try
 {
 	$host=$config['DB_HOST'];
@@ -50,6 +50,8 @@ try
 			setcookie("session", $randomString, time()+2*24*60*60);
 			header("Location: index.php");
 			die();
+	}else{
+		echo 'This Username or Email already used';
 	}
 }
 catch(PDOException $e)

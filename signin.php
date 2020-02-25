@@ -1,49 +1,3 @@
-<?php
-
-define('Gugol', TRUE);
-
-include 'config.php';
-include 'engine/utils/RandomString.php';
-
-if(isset($_POST['email']) && isset($_POST['password']))
-{
-try
-{
-	$host=$config['DB_HOST'];
-    $dbname=$config['DB_DATABASE'];
-	$conn= new PDO("mysql:host=$host;dbname=$dbname",$config['DB_USERNAME'],$config['DB_PASSWORD']);
-	$stmt = $conn->prepare("SELECT Password_Hash FROM users WHERE Email = ?");
-	$stmt->bindValue(1, $_POST['email']);
-	$stmt->execute();
-    $rows = $stmt->fetchAll();
-       foreach ($rows as $rs)
-		{
-          $hash = $rs['Password_Hash'];
-        }
-		
-		if(isset($hash))
-		{
-		
-		if(password_verify($_POST['password'], $hash))
-		{
-			$randomString = generateRandomString();
-			$stmt = $conn->prepare("UPDATE users SET Session = ? WHERE Email = ?");
-			$stmt->bindValue(1, $randomString);
-			$stmt->bindValue(2, $_POST['email']);
-			$stmt->execute();
-			setcookie("session", $randomString, time()+2*24*60*60);
-			header("Location: index.php");
-			die();
-			
-		}
-		}
-}
-catch(PDOException $e)
-{
-    echo "Error:".$e->getMessage();
-}
-}
-?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -52,7 +6,7 @@ catch(PDOException $e)
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Gugol | Signin</title>
+    <title>UltraCloud | Sign In</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/sign-in/">
 
@@ -64,7 +18,7 @@ catch(PDOException $e)
   </head>
 
   <body class="text-center">
-    <form class="form-signin" action="/signin.php" method="post">
+    <form class="form-signin" action="/signin_script.php" method="post">
       <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
       <label for="inputEmail" class="sr-only">Email address</label>
       <input type="email" id="inputEmail" class="form-control" name="email" placeholder="Email address" required autofocus>

@@ -2,6 +2,7 @@
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<title>UltraCloud | Sign Up</title>
 <!------ Include the above in your HEAD tag ---------->
 <style>
 .note
@@ -47,15 +48,15 @@
                                 <input type="text" class="form-control" name="username" placeholder="Your Name" value=""/>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" name="email" placeholder="Email" value=""/>
+                                <input type="email" class="form-control" name="email" placeholder="Email" value=""/>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <input type="text" class="form-control" name="password" placeholder="Your Password" value=""/>
+                                <input type="password" class="form-control" name="password" placeholder="Your Password" value=""/>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" name="password_confirm" placeholder="Confirm Password" value=""/>
+                                <input type="password" class="form-control" name="password_confirm" placeholder="Confirm Password" value=""/>
                             </div>
                         </div>
                     </div>
